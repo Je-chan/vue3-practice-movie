@@ -1,4 +1,12 @@
 <template>
-  <h1>Home</h1>
-  <div class="btn btn-primary">Home!</div>
+  <HeadLine />
 </template>
+
+<script>
+import HeadLine from '~/components/HeadLine';
+export default {
+  components: {
+    HeadLine,
+  },
+};
+</script>
