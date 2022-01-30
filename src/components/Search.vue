@@ -25,7 +25,6 @@
 </template>
 
 <script>
-import axios from 'axios';
 export default {
   data() {
     return {
@@ -59,11 +58,16 @@ export default {
 
   methods: {
     async apply() {
-      const OMDB_API_KEY = '7035c60c';
-      const res = await axios.get(
-        `https://www.omdbapi.com/?apikey=${OMDB_API_KEY}&s=${this.title}&type=${this.type}&y=${this.year}&page=1`
-      );
-      console.log(res);
+      // Store의 Mutations 를 실행할 때는 .commit 메소드
+      // Actions 를 실행할 때는 .dispatch 메소드를 실행한다.
+      // dispatch 안에 들어가는 경로는 modules 의 경로가 된다.
+      // this.$store (store 데이터에 접근) .dispatch(actions 를 실행할 건데) 첫 번째 인자(이 모듈로 접근해 그 모듈 안의 action 에 있는 함수를 실행한다) 두 번째 인자(이 데이터를 함수의 인자로 전달한다)
+      this.$store.dispatch('movie/searchMovies', {
+        title: this.title,
+        type: this.type,
+        number: this.number,
+        year: this.year,
+      });
     },
   },
 };
