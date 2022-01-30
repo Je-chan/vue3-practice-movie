@@ -7,7 +7,7 @@ export default {
   // 실제로 취급해야하는 data 를 의미함. 리얼 상태
   state: () => ({
     movies: [],
-    message: '',
+    message: 'Search for the movie title!',
     loading: false,
   }),
   // computed
@@ -37,6 +37,13 @@ export default {
   // 첫 번째 인자로 context(함수 작성할 때 이름은 상관 없음) 가 받아와지고 state, getters, commits 가 내장 함수들이다.
   actions: {
     async searchMovies({ state, commit }, { title, type, number, year }) {
+      if (state.loading) {
+        return;
+      }
+      commit('updateState', {
+        message: '',
+        loading: true,
+      });
       try {
         const res = await _fetchMovie({
           title,
@@ -73,6 +80,10 @@ export default {
         commit('updateState', {
           movies: [],
           message,
+        });
+      } finally {
+        commit('updateState', {
+          loading: false,
         });
       }
     },
