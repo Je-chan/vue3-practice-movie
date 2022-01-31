@@ -3,7 +3,12 @@
     <Logo />
     <div class="nav nav-pills">
       <div v-for="nav in navigations" :key="nav.name" class="nav-item">
-        <RouterLink :to="nav.href" class="nav-link" active-class="active">
+        <RouterLink
+          :to="nav.href"
+          class="nav-link"
+          active-class="active"
+          :class="{ active: isMatch(nav.path) }"
+        >
           {{ nav.name }}
         </RouterLink>
       </div>
@@ -26,6 +31,7 @@ export default {
         {
           name: 'Movie',
           href: '/movie/tt4520988',
+          path: /^\/movie/, //\movie
         },
         {
           name: 'About',
@@ -33,6 +39,12 @@ export default {
         },
       ],
     };
+  },
+  methods: {
+    isMatch(path) {
+      if (!path) return false;
+      return path.test(this.$route.fullPath);
+    },
   },
 };
 </script>
