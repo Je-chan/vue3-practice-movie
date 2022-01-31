@@ -20,7 +20,9 @@
           backgroundImage: `url(${requestDiffSizeImage(theMovie.Poster)})`,
         }"
         class="poster"
-      ></div>
+      >
+        <Loader v-if="imageLoading" absolute />
+      </div>
       <div class="specs">
         <div class="title">
           {{ theMovie.Title }}
@@ -73,6 +75,11 @@ export default {
   components: {
     Loader,
   },
+  data() {
+    return {
+      imageLoading: true,
+    };
+  },
   computed: {
     theMovie() {
       return this.$store.state.movie.theMovie;
@@ -91,7 +98,17 @@ export default {
   },
   methods: {
     requestDiffSizeImage(url, size = 700) {
-      return url.replace('SX300', `SX${size}`);
+      if (!url || url === 'N/A') {
+        this.imageLoading = false;
+        // 빈문자열을 주고 backgroundImage 로 아무것도 표시하지 않도록 반환하는 작업
+        return '';
+      }
+      const src = url.replace('SX300', `SX${size}`);
+      // 이미지 로딩이 다 끝나기 전에 다른 컴포넌트들은 렌더링할 수 있도록 하기 위하여 then 체이닝을 진행함
+      this.$loadImage(src).then(() => {
+        this.imageLoading = false;
+      });
+      return src;
     },
   },
 };
@@ -148,6 +165,7 @@ export default {
     background-size: cover;
     background-position: center;
     flex-shrink: 0;
+    position: relative;
   }
   .specs {
     flex-grow: 1;
