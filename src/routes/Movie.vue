@@ -70,7 +70,7 @@
 </template>
 <script>
 import Loader from '~/components/Loader';
-
+import { mapState, mapActions } from 'vuex';
 export default {
   components: {
     Loader,
@@ -81,22 +81,26 @@ export default {
     };
   },
   computed: {
-    theMovie() {
-      return this.$store.state.movie.theMovie;
-    },
-    loading() {
-      return this.$store.state.movie.loading;
-    },
+    ...mapState('movie', ['theMovie', 'loading']),
+    // theMovie() {
+    //   return this.$store.state.movie.theMovie;
+    // },
+    // loading() {
+    //   return this.$store.state.movie.loading;
+    // },
   },
   created() {
     // console.log(this.$route);
     // fullPath, href, params: {id: ~~} 등등의 정보가 들어가 있음
-    this.$store.dispatch('movie/searchMovieWithId', {
+    // * mapActions 를 이용해서 대체함
+    // this.$store.dispatch('movie/searchMovieWithId', {
+    this.searchMoviWithId({
       // path 의 params 를 가져오는 것
       id: this.$route.params.id,
     });
   },
   methods: {
+    ...mapActions('movie', ['searchMoviWithId']),
     requestDiffSizeImage(url, size = 700) {
       if (!url || url === 'N/A') {
         this.imageLoading = false;

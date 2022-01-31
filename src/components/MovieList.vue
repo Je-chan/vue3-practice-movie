@@ -12,6 +12,7 @@
 <script>
 import MovieItem from '~/components/MovieItem';
 import Loader from '~/components/Loader';
+import { mapState } from 'vuex';
 export default {
   components: {
     MovieItem,
@@ -20,15 +21,17 @@ export default {
 
   computed: {
     // computed 를 사용하는 이유는 반응성이 유지된 상태로 화면에 렌더링 돼야하기 때문.
-    movies() {
-      return this.$store.state.movie.movies;
-    },
-    message() {
-      return this.$store.state.movie.message;
-    },
-    loading() {
-      return this.$store.state.movie.loading;
-    },
+
+    ...mapState('movie', ['movies', 'message', 'loading']),
+    // movies() {
+    //   return this.$store.state.movie.movies;
+    // },
+    // message() {
+    //   return this.$store.state.movie.message;
+    // },
+    // loading() {
+    //   return this.$store.state.movie.loading;
+    // },
   },
 };
 </script>
