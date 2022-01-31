@@ -13,6 +13,9 @@
         </RouterLink>
       </div>
     </div>
+    <div @click="toAbout" class="user">
+      <img :src="image" :alt="name" />
+    </div>
   </header>
 </template>
 <script>
@@ -40,22 +43,66 @@ export default {
       ],
     };
   },
+  computed: {
+    image() {
+      return this.$store.state.about.image;
+    },
+    name() {
+      return this.$store.state.about.name;
+    },
+  },
   methods: {
     isMatch(path) {
       if (!path) return false;
       return path.test(this.$route.fullPath);
     },
+    toAbout() {
+      // router.push 는 어느 페이지로 넘어가라는 얘기
+      this.$router.push('/about');
+    },
   },
 };
 </script>
 <style lang="scss" scoped>
+/* @import '~/scss/main'; */
+
 header {
+  position: relative;
   height: 70px;
   padding: 0 40px;
   display: flex;
   align-items: center;
   .logo {
     margin-right: 40px;
+  }
+  .user {
+    width: 40px;
+    height: 40px;
+    padding: 6px;
+    border-radius: 50%;
+    box-sizing: border-box;
+    background-color: $gray-200;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 40px;
+    margin: auto;
+    transition: 0.4s;
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+    }
+    &:hover {
+      background-color: darken($gray-200, 10%);
+    }
+  }
+  // bootstrap 문법
+  @include media-breakpoint-down(sm) {
+    .nav {
+      display: none;
+    }
   }
 }
 </style>
