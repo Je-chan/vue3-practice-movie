@@ -7,7 +7,9 @@ import NotFound from './NotFound';
 export default createRouter({
   // Hash 모드
   history: createWebHashHistory(),
-  // 페이지들을 구분
+  scrollBehavior() {
+    return { top: 0 };
+  }, // 페이지들을 구분
   routes: [
     {
       path: '/',

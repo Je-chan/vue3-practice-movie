@@ -1,13 +1,16 @@
 import axios from 'axios';
 import _uniqBy from 'lodash/uniqBy';
 
+// movie.js 에서만 사용한다는 의미를 담아서 _ 기호를 사용
+const _defaultMessage = 'Search for the movie title!';
+
 export default {
   // module 화 해서 사용할 수 있다는 것을 의미하는 namespaced
   namespaced: true,
   // 실제로 취급해야하는 data 를 의미함. 리얼 상태
   state: () => ({
     movies: [],
-    message: 'Search for the movie title!',
+    message: _defaultMessage,
     loading: false,
     theMovie: {},
   }),
@@ -29,9 +32,10 @@ export default {
         state.message = payload.message;
       });
     },
-
     resetMovies(state) {
       state.movies = [];
+      state.message = _defaultMessage;
+      state.loading = false;
     },
   },
   // actions: 직접적으로 데이터를 수정할 수 없다. 비동기로 작동한다.

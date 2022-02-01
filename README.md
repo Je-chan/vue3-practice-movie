@@ -9,7 +9,7 @@
 
 - options 에서 additionalData 를 이용해 매번 @import 로 scss 를 불러오지 않아도 필요한 데이터를 받아올 수 있다
 
-# Vuex
+# 3. Vuex
 
 - store 를 만들어서 모듈들을 관리하는 용도로 사용한다
 - state 는 data 처럼 사용하는 사용
@@ -25,3 +25,11 @@
   - $store.getters['모듈몀/getters명']
   - $store.commit('모둘명/mutatios명')
   - $store.dispatch('모둘명/actions명')
+- Vuex helpers
+
+  - mapState, mapGetters 는 computed 에서 사용
+  - mapMutations, mapActions 는 method 에서 사용
+
+  # 4. Vue Router
+
+  - scrollBehavior 를 이용하면 라우팅 했을 때, 스크롤의 위치를 지정할 수 있다.
