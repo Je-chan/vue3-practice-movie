@@ -30,6 +30,18 @@
   - mapState, mapGetters 는 computed 에서 사용
   - mapMutations, mapActions 는 method 에서 사용
 
-  # 4. Vue Router
+# 4. Vue Router
 
-  - scrollBehavior 를 이용하면 라우팅 했을 때, 스크롤의 위치를 지정할 수 있다.
+- scrollBehavior 를 이용하면 라우팅 했을 때, 스크롤의 위치를 지정할 수 있다.
+- RouterView : 변경하는 페이지가 출력될 영역을 의미.
+- RouterLink : 페이지 이동을 위한 링크 컴포넌트.
+
+- this.$route : Route(페이지) 정보를 가지는 객체.
+  - 속성을 갖고 있어 데이터를 조회
+  - fullPath 는 접근된 페이지에 대한 전체 경로
+  - params 는 접근된 페이지의 params 에 대한 정보를 지님
+- this.$router : Route 를 조작하기 위한 객체
+  - 메소드를 갖고 있어서 동작을 일으키는 용도
+  - push 를 이용해서 페이지를 이동하는 동작을 만듦
+- 더 자세한 내용은 공식문서
+  - https://next.router.vuejs.org/api/
