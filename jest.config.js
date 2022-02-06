@@ -1,24 +1,27 @@
 module.expoirts = {
   // 파일 확장자를 지정하지 않을 경우 Jest 가 참고할 확장자 목록을 의미한다.
-  moduleFileExtensions: ['js', 'vue'],
-
-  // <rootDir> 은 토큰으로 모든 루트 경로를 참조할 수 있다.
+  moduleFileExtensions: ['js', 'jsx', 'json', 'vue'],
+  // `@`나 `~` 같은 경로 별칭을 매핑합니다.
+  // E.g. `import HelloWorld from '~/components/HelloWorld.vue';`
+  // `<rootDir>` 토큰을 사용해 루트 경로를 참조할 수 있습니다.
+  // TODO: 프로젝트에 맞는 경로로 수정하세요!
   moduleNameMapper: {
     '^~/(.*)$': '<rootDir>/src/$1',
+    '^@/(.*)$': '<rootDir>/src/$1',
   },
-
-  // 해당하는 경로에서 모듈을 가져오지 않는다
-  modulePathIgnorePatterns: ['<rootDir>/node_modules', '<rootDir>/dist'],
-
-  // jsdom 에 대한 URL 을 설정한다
-  // jest 는 브라우저에서 동작하는 것처럼 환경을 제공해야 하는데 jsdom 을 이용해서 테스트를 제공하는 것
-  // https://github.com/facebook/jest/issues/6766
-  testURL: 'http://localhost',
-
-  // jest 는 vue.js 환경에서만 테스트를 하는 것이 아님
-  // 그렇기에 vue라는 확장자, js 라는 확장자에 맞춰서 새로운 코드로 변환을 해줘야 한다.
+  // 일치하는 경로에서는 모듈을 가져오지 않습니다.
+  // `<rootDir>` 토큰을 사용해 루트 경로를 참조할 수 있습니다.
+  // TODO: 프로젝트에 맞는 경로로 수정하세요!
+  modulePathIgnorePatterns: [
+    '<rootDir>/node_modules',
+    '<rootDir>/build',
+    '<rootDir>/dist',
+  ],
+  // 정규식과 일치하는 파일의 변환 모듈을 지정합니다.
   transform: {
     '^.+\\.vue$': 'vue-jest',
-    '^.+\\.js$': 'babel-jest',
+    '^.+\\.jsx?$': 'babel-jest',
   },
+  // Jest Snapshot 테스트에 필요한 모듈을 지정합니다.
+  snapshotSerializers: ['jest-serializer-vue'],
 };
