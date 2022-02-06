@@ -112,10 +112,61 @@
 - vue 컴포넌트를 테스트 하기 위해서는 컴포넌트와 테스트를 연결이 필요하다 (단순한 자바스크립트 코드가 아니기 때문)
 - 이를 위해서 Vue test Utils 가 존재하는 것
 
-  - vm : 컴포넌트 내부에서 사용하는 this 와 동일하다.
-  - setData : 반응성을 유지한 상태로 데이터를 테스트 파일 내부에서 갱신을 할 수 있다.
+```jsx
+
+// 예시 코드
+<template>
+  <span>Count: {count}</span>
+</template>
+
+<scirpt>
+export default {
+  props: {
+    count: {
+      type: Number,
+      required: true,
+    }
+  }
+}
+</script>
+```
+
+```jsx
+import { mount } from '@vue/test-utils';
+import Component from './Component.vue';
+
+test('props', () => {
+  const wrapper = mount(Component, {
+    props: {
+      count: 5,
+    },
+  });
+
+  expect(wrapper.html()).toContain('Count: 5');
+});
+```
+
+- https://next.vue-test-utils.vuejs.org/api/
 
 - mount : 마운트가 된 다음에 테스트를 적용. 첫 번째 인자로는 컴포넌트를 담아내고, 두 번째 인자로는 여러 메소드를 사용할 수 있다.
+
   - attrs : 특정 컴포넌트에 속성을 부여할 수 있다.
   - data : vue 에서 사용하는 data 와 동일하게 사용할 수 있다.
   - props: 마찬가지로 vue 에서 사용하는 방식과 동일하게 사용할 수 있다.
+
+- shallowMount : stub 된 태그를 가져온다. 특정한 컴포넌트에 연결된 다른 컴포넌트들은 stub 로 연결한다.
+
+  - 하나의 컴포넌트만 테스트하기에 유용하다.
+  - 자식 컴포넌트들은 stub 로 가짜로 연결된 척만 하는 것. 실질적으로 렌더링하는 건 shallowMount 된 것만.
+  - 일반적인 경우 이게 더 유용하고 권장되는 사항이다.
+
+- wrapper 에 mount, shallowMount 된 컴포넌트 객체를 담는다.
+
+  - 밑에는 wrapper 에서 사용할 수 있는 속성(vm)과 메소드들(vm 제외 모두)
+  - vm : 컴포넌트 내부에서 사용하는 this 와 동일하다. vue model 의 약자. wrapper 객체에서 컴포넌트 내부에 있는 data 나 메소드를 사용할 때 this 키워드 대신에 사용한다.
+  - find : HTML 요소를 찾는데 사용한다. 태그명으로 찾을 수 있고 속성 선택자를 통해서 그 속성을 갖고 있는 요소를 찾아낸다. 만약 값이 존재한다면 DOMWrapper 라는 객체로 반환하고 반환된 내용은 다시 메소드 체이닝을 걸 수 있다.
+  - setData : 반응성을 유지한 상태로 데이터를 테스트 파일 내부에서 갱신을 할 수 있다. Promise 로 반환한다. 데이터를 수정하고 반응성을 가질 때까지 기다린다.
+  - html : html 코드를 가져온다.
+  - attributes : 해당하는 컴포넌트에서 얻고 싶은 attirbutes 의 값을 추출할 수 있다. (id 나 class 값)
+  - exists : 그 html 요소가 존재하는지 찾아내는 것
+  - unmount : 가끔씩 테스트를 할 때는 Mount 연결을 해제해야 할 때가 있다. 연결된 컴포넌트를 해제할 때 사용한다. 마운트될 때 데이터가 오염되는 경우를 대비하는 것
