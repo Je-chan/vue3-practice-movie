@@ -1,5 +1,5 @@
 module.expoirts = {
-  moduleFileExtensions: ['js', 'jsx', 'json', 'vue'],
+  moduleFileExtensions: ['js','vue'],
 
   moduleNameMapper: {
     '^~/(.*)$': '<rootDir>/src/$1',
@@ -10,9 +10,9 @@ module.expoirts = {
     '<rootDir>/build',
     '<rootDir>/dist',
   ],
+  testURL: 'http://localhost',
   transform: {
     '^.+\\.vue$': 'vue-jest',
     '^.+\\.jsx?$': 'babel-jest',
   },
-  snapshotSerializers: ['jest-serializer-vue'],
 };
