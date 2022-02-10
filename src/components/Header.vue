@@ -7,8 +7,7 @@
           :to="nav.href"
           class="nav-link"
           active-class="active"
-          :class="{ active: isMatch(nav.path) }"
-        >
+          :class="{ active: isMatch(nav.path) }">
           {{ nav.name }}
         </RouterLink>
       </div>

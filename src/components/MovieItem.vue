@@ -2,8 +2,7 @@
   <RouterLink
     :to="`/movie/${movie.imdbID}`"
     class="movie"
-    :style="{ backgroundImage: `url(${movie.Poster})` }"
-  >
+    :style="{ backgroundImage: `url(${movie.Poster})` }">
     <Loader v-if="imageLoading" :size="1.5" absolute />
     <div class="info">
       <div class="year">

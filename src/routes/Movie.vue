@@ -19,8 +19,7 @@
         :style="{
           backgroundImage: `url(${requestDiffSizeImage(theMovie.Poster)})`,
         }"
-        class="poster"
-      >
+        class="poster">
         <Loader v-if="imageLoading" absolute />
       </div>
       <div class="specs">
@@ -42,12 +41,10 @@
               v-for="{ Source: name, Value: score } in theMovie.Ratings"
               :key="name"
               :title="name"
-              class="rating"
-            >
+              class="rating">
               <img
                 :src="`https://raw.githubusercontent.com/ParkYoungWoong/vue3-movie-app/master/src/assets/${name}.png`"
-                :alt="name"
-              />
+                :alt="name"/>
               <span>{{ score }}</span>
             </div>
           </div>

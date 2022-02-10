@@ -5,15 +5,13 @@
       v-model="title"
       class="form-control"
       placeholder="Search for Movies, Series & more"
-      @keyup.enter="apply"
-    />
+      @keyup.enter="apply" />
     <div class="selects">
       <select
         v-for="filter in filters"
         v-model="$data[filter.name]"
         :key="filter.name"
-        class="form-select"
-      >
+        class="form-select">
         <option v-if="filter.name === 'year'" value="">All Years</option>
         <option v-for="item in filter.items" :key="item">
           {{ item }}
