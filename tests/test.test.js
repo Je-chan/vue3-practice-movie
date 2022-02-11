@@ -3,7 +3,7 @@ import Test from './Test.vue';
 
 test('메시지 변경', async () => {
   const wrapper = mount(Test);
-  expect(wrapper.vm.msg).toBe('Hello Vue test utils');
+  expect(wrapper.vm.msg).toBe('good');
   // 아래와 같이 바로 값을 넣어주게 되면 반응성이 없음.
   // wrapper.vm.msg = 'Hello?';
   await wrapper.setData({

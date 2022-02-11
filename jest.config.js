@@ -1,4 +1,4 @@
-module.expoirts = {
+module.exports = {
   moduleFileExtensions: ['js','vue'],
 
   moduleNameMapper: {
@@ -15,4 +15,5 @@ module.expoirts = {
     '^.+\\.vue$': 'vue-jest',
     '^.+\\.jsx?$': 'babel-jest',
   },
+  verbose: true,
 };
