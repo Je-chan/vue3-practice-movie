@@ -33,7 +33,6 @@ export default {
       // ['movies', 'message', 'loading']
       Object.keys(payload).forEach((key) => {
         state[key] = payload[key];
-      state.message = payload.message;
       });
     },
     resetMovies(state) {
@@ -45,7 +44,7 @@ export default {
   // actions: 직접적으로 데이터를 수정할 수 없다. 모두 비동기로 동작한다.
   // 첫 번째 인자로 context(함수 작성할 때 이름은 상관 없음) 가 받아와지고 state, getters, commits 가 내장 함수들이다.
   actions: {
-    async searchMovies({ state, commit }, { title, type, number, year }) {
+    async searchMovies({ state, commit }, payload) {
       if (state.loading) return;
       commit('updateState', {
         message: '',
@@ -53,14 +52,11 @@ export default {
       });
       try {
         const res = await _fetchMovie({
-          title,
-          type,
-          year,
+          ...payload,
           page: 1,
         });
 
         const { Search, totalResults } = res.data;
-
         commit('updateState', {
           movies: _uniqBy(Search, 'imdbID'),
         });
@@ -70,11 +66,9 @@ export default {
         if (pageLength > 1) {
           for (let page = 2; page <= pageLength; page++) {
             // number 는 사용자가 영화 몇 개까지 볼것인지를 설정하는 것
-            if (page > number / 10) break;
+            if (page > payload.number / 10) break;
             const res = await _fetchMovie({
-              title,
-              type,
-              year,
+              ...payload,
               page,
             });
             const { Search } = res.data;
@@ -103,17 +97,18 @@ export default {
     // 이 내용들을 첫 번째 인자로 받을 수 있다.
     async searchMovieWithId({ state, commit }, payload) {
       if (state.loading) return;
-
       commit('updateState', {
         theMovie: {},
         loading: true,
       });
       try {
         const res = await _fetchMovie(payload);
+        console.log(res)
         commit('updateState', {
           theMovie: res.data,
         });
       } catch (err) {
+        console.log(err)
         commit('updateState', {
           theMovie: {},
         });
