@@ -8,6 +8,10 @@ export default {
   // module 화 해서 사용할 수 있다는 것을 의미하는 namespaced
   namespaced: true,
   // 실제로 취급해야하는 data 를 의미함. 리얼 상태
+  // state 는 할당된 값이 하나의 함수. state 는 하나의 메소드고, 실행되야지만 데이터가 반환되는 구조
+  // state 는 하나의 데이터고, 객체와 같은 참조형은 데이터의 불변성이 적용되지 않기 때문에 함수로 만들어서 반환되도록 함
+  // 새로 store 로 만들어서 데이터가 중복되지 않도록 한다. 
+  // 그러니 꼭 state 는 함수로 만들어서 반환되도록 한다.
   state: () => ({
     movies: [],
     message: _defaultMessage,
@@ -23,13 +27,13 @@ export default {
   },
   // methods
   // mutations: 변이라는 의미. 데이터를 변경시켜주는 역할을 진행
-  // 이외의 메소드에서는 변경을 할 수 없다.
+  // 이외의 메소드에서는 state를 변경을 할 수 없다.
   mutations: {
     updateState(state, payload) {
       // ['movies', 'message', 'loading']
       Object.keys(payload).forEach((key) => {
         state[key] = payload[key];
-        state.message = payload.message;
+      state.message = payload.message;
       });
     },
     resetMovies(state) {
@@ -38,7 +42,7 @@ export default {
       state.loading = false;
     },
   },
-  // actions: 직접적으로 데이터를 수정할 수 없다. 비동기로 작동한다.
+  // actions: 직접적으로 데이터를 수정할 수 없다. 모두 비동기로 동작한다.
   // 첫 번째 인자로 context(함수 작성할 때 이름은 상관 없음) 가 받아와지고 state, getters, commits 가 내장 함수들이다.
   actions: {
     async searchMovies({ state, commit }, { title, type, number, year }) {
@@ -90,7 +94,13 @@ export default {
         });
       }
     },
-
+    // 단일 영회의 상세 정보를 가져오고 있음
+    // context 라는 개념이 첫 번째 인자로 들어온다.
+    // 그 안에 데이ㅏ터에 접근할 수 있는 state
+    // 변이 메소드를 실행할 수 있는 commit
+    // 그외에는 첫 getters 에 접근할 수 있는 getters
+    // 다른 Action 을 실행할 수 있는 dispatch 
+    // 이 내용들을 첫 번째 인자로 받을 수 있다.
     async searchMovieWithId({ state, commit }, payload) {
       if (state.loading) return;
 
